@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -18,13 +19,17 @@ public class SignupActivity extends AppCompatActivity {
     UserDBHandler helper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_signup);
-        name = findViewById(R.id.name);
-        email = findViewById(R.id.email);
-        password = findViewById(R.id.signupPassword);
-        conPassword = findViewById(R.id.conPassword);
-        helper = new UserDBHandler(this, "userDB", null, 1);
+        try {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_signup);
+            name = findViewById(R.id.name);
+            email = findViewById(R.id.email);
+            password = findViewById(R.id.signupPassword);
+            conPassword = findViewById(R.id.conPassword);
+            helper = new UserDBHandler(this, "userDB", null, 1);
+        }catch (Exception e){
+            Log.e("myTag", "" + e);
+        }
     }
 
     public void signUp(View v){

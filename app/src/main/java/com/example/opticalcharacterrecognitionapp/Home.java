@@ -45,13 +45,16 @@ public class Home extends AppCompatActivity {
     private Bitmap bitmap;
     private static final int REQUEST_CAMERA_CODE = 100;
     private static final int REQUEST_IMAGE_CAPTURE = 1;
-
+    String username;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         captureBtn = findViewById(R.id.captureBtn);
         historyBtn = findViewById(R.id.historyBtn);
+
+        Bundle bundle = getIntent().getBundleExtra("data");
+        username = bundle.getString("Username");
 
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
 //            StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
@@ -73,6 +76,9 @@ public class Home extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent historyIntent = new Intent(Home.this,SavedDetailsActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("Username", username);
+                historyIntent.putExtra("data", bundle);
                 startActivity(historyIntent);
             }
         });
@@ -87,26 +93,17 @@ public class Home extends AppCompatActivity {
     }
 
     private boolean checkPermission(){
-        int cameraPermission = ContextCompat.checkSelfPermission(Home.this,Manifest.permission.CAMERA);
+        int cameraPermission = ContextCompat.checkSelfPermission(Home.this,Manifest.permission.READ_MEDIA_IMAGES);
         return cameraPermission == PackageManager.PERMISSION_GRANTED;
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if(grantResults.length > 0){
-            boolean cameraPermissionGranted = (grantResults[0] == PackageManager.PERMISSION_GRANTED);
-            if(cameraPermissionGranted){
-                Toast.makeText(this,"Permission Granted",Toast.LENGTH_SHORT).show();
-                captureImage();
-            }
-            else{
-                Toast.makeText(this,"Permission Denied",Toast.LENGTH_SHORT).show();
-            }
-        }
+        captureImage();
     }
 
-    @Override
+//    @Override
 //    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
 //        super.onActivityResult(requestCode, resultCode, data);
 //

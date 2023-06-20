@@ -21,15 +21,19 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        username = findViewById(R.id.loginEmail);
-        password = findViewById(R.id.loginPassword);
-        signup = findViewById(R.id.linkToSignUp);
-        helper = new UserDBHandler(this, "userDB", null, 1);
-        signup.setOnClickListener(v -> {
-                    Intent i = new Intent(LoginActivity.this,SignupActivity.class);
-                    startActivity(i);
-                }
-        );
+        try {
+            username = findViewById(R.id.loginEmail);
+            password = findViewById(R.id.loginPassword);
+            signup = findViewById(R.id.linkToSignUp);
+            helper = new UserDBHandler(this, "userDB", null, 1);
+            signup.setOnClickListener(v -> {
+                        Intent i = new Intent(LoginActivity.this,SignupActivity.class);
+                        startActivity(i);
+                    }
+            );
+        }catch(Exception e){
+            Log.e("myTag", "" + e);
+        }
     }
 
     public void onLogin(View v){
