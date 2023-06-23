@@ -151,7 +151,8 @@ public class EditActivity extends AppCompatActivity {
 
     private void deleteRecord(String time) {
             if(dbHandler.deleteScannedText(time)){
-                Intent intent = new Intent(EditActivity.this, MainActivity.class);
+               Intent intent = new Intent(EditActivity.this, Home.class); //if given home activity ,app crash,but data will be stored in database
+              //  Intent intent = new Intent(EditActivity.this, Home.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
             }
@@ -166,7 +167,8 @@ public class EditActivity extends AppCompatActivity {
         String newRecordTime = dtf.format(now);
 
         if(dbHandler.updateScannedText(title,content,time,newRecordTime)){
-            Intent intent = new Intent(EditActivity.this, MainActivity.class);
+            Intent intent = new Intent(EditActivity.this, Home.class); //if given home app crashes,data will be stored in databse
+           // Intent intent = new Intent(EditActivity.this, Home.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
         }
@@ -221,7 +223,8 @@ public class EditActivity extends AppCompatActivity {
         Toast.makeText(EditActivity.this,"Scanned Text is successfully stored",Toast.LENGTH_SHORT).show();
 
         editText.setText("");
-        final Intent intent = new Intent(EditActivity.this, MainActivity.class);
+       //final Intent intent = new Intent(EditActivity.this, MainActivity.class);// app crashes in both case ,but value is stored in database
+        final Intent intent = new Intent(EditActivity.this, Home.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
 
